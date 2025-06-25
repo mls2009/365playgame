@@ -258,10 +258,12 @@ header {
 .game-iframe-container {
     position: relative;
     width: 100%;
-    max-width: 960px; /* Max width for the game */
+    /* A narrower max-width is better for a portrait-oriented game on desktop */
+    max-width: 480px; /* Max width for the game, adjusted for portrait aspect ratio */
     margin: var(--spacing-md) auto 0;
     overflow: hidden;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 = 0.5625) */
+    /* We're changing this to a 3:4 portrait aspect ratio (4 / 3 = 1.3333) */
+    padding-top: 133.33%; /* 3:4 Aspect Ratio */
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-dark);
 }
