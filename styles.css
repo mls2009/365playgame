@@ -420,6 +420,12 @@ footer {
         flex: 1 0 50%;
         margin-bottom: var(--spacing-lg);
     }
+    
+    /* 平板端游戏区域优化 */
+    .game-iframe-container {
+        max-width: 100%;
+        margin: var(--spacing-md) var(--spacing-sm) 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -463,10 +469,110 @@ footer {
     .footer-content > div {
         margin-bottom: var(--spacing-lg);
     }
+    
+    /* 移动端游戏区域优化 */
+    .play-section {
+        padding: var(--spacing-lg) 0;
+        background-color: #f9f9f9;
+    }
+    
+    .game-iframe-container {
+        max-width: 100%;
+        margin: var(--spacing-sm) 0 0;
+        /* 调整为更适合手机的宽高比 4:3 */
+        padding-top: 75%; /* 4:3 Aspect Ratio - 更适合移动端 */
+        border-radius: var(--border-radius-md); /* 稍小的圆角 */
+    }
 }
 
 @media (max-width: 576px) {
     .hero-content h2 {
         font-size: 2rem;
+    }
+    
+    /* 小屏手机优化 */
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .play-section {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .play-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .play-section p {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .game-iframe-container {
+        margin: var(--spacing-sm) 0 0;
+        /* 小屏手机使用接近正方形的比例 */
+        padding-top: 85%; /* 约6:5 宽高比 - 最适合小屏手机 */
+        border-radius: var(--border-radius-sm);
+        /* 添加触摸友好的样式 */
+        touch-action: manipulation;
+    }
+    
+    .game-iframe-container iframe {
+        /* 确保触摸事件正常工作 */
+        touch-action: auto;
+        /* 防止iOS上的双击缩放 */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .game-iframe-container {
+        /* 横屏时使用16:9比例充分利用屏幕空间 */
+        padding-top: 56.25%;
+        margin: var(--spacing-xs) 0 0;
+    }
+    
+    .play-section {
+        padding: var(--spacing-md) 0;
+    }
+    
+    .play-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .play-section p {
+        font-size: 0.85rem;
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
+/* 极小屏幕优化（小于360px宽度的设备） */
+@media (max-width: 360px) {
+    .game-iframe-container {
+        /* 极小屏幕使用更高的比例 */
+        padding-top: 90%; /* 约9:10 宽高比 */
+        margin: var(--spacing-xs) 0 0;
+    }
+    
+    .play-section h2 {
+        font-size: 1.3rem;
+    }
+    
+    .play-section p {
+        font-size: 0.85rem;
+    }
+}
+
+/* iOS Safari 特殊优化 */
+@supports (-webkit-touch-callout: none) {
+    .game-iframe-container iframe {
+        /* iOS上的额外优化 */
+        -webkit-overflow-scrolling: touch;
+        transform: translateZ(0); /* 启用硬件加速 */
     }
 } 
