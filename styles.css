@@ -277,6 +277,119 @@ header {
     border: 0;
 }
 
+/* 全屏控制按钮样式 */
+.fullscreen-controls {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 10;
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.fullscreen-btn,
+.exit-fullscreen-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--apple-white);
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.fullscreen-btn:hover,
+.exit-fullscreen-btn:hover {
+    background-color: var(--apple-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+}
+
+.fullscreen-btn:active,
+.exit-fullscreen-btn:active {
+    transform: translateY(0);
+}
+
+.fullscreen-btn i,
+.exit-fullscreen-btn i {
+    font-size: 1.1rem;
+}
+
+/* 全屏模式样式 */
+.game-iframe-container:fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: #000;
+    z-index: 999999;
+}
+
+.game-iframe-container:-webkit-full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: #000;
+    z-index: 999999;
+}
+
+.game-iframe-container:-moz-full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: #000;
+    z-index: 999999;
+}
+
+.game-iframe-container:-ms-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: #000;
+    z-index: 999999;
+}
+
+/* 全屏模式下的iframe样式 */
+.game-iframe-container:fullscreen iframe,
+.game-iframe-container:-webkit-full-screen iframe,
+.game-iframe-container:-moz-full-screen iframe,
+.game-iframe-container:-ms-fullscreen iframe {
+    width: 100vw !important;
+    height: 100vh !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
 /* 
 ====================================
     About Section
@@ -526,6 +639,20 @@ footer {
         -webkit-user-select: none;
         user-select: none;
     }
+    
+    /* 移动端全屏按钮优化 */
+    .fullscreen-btn .btn-text,
+    .exit-fullscreen-btn .btn-text {
+        display: none; /* 小屏幕只显示图标 */
+    }
+    
+    .fullscreen-btn,
+    .exit-fullscreen-btn {
+        padding: var(--spacing-sm);
+        min-width: 44px; /* 确保触摸目标足够大 */
+        min-height: 44px;
+        justify-content: center;
+    }
 }
 
 /* 横屏模式优化 */
@@ -568,11 +695,82 @@ footer {
     }
 }
 
+/* 伪全屏模式样式（用于不支持全屏API的设备） */
+.game-iframe-container.pseudo-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    background-color: #000;
+    z-index: 999999 !important;
+}
+
+.game-iframe-container.pseudo-fullscreen iframe {
+    width: 100vw !important;
+    height: 100vh !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* 全屏激活时隐藏页面其他内容 */
+body.fullscreen-active {
+    overflow: hidden;
+}
+
+body.fullscreen-active > *:not(.container) {
+    display: none;
+}
+
+body.fullscreen-active .container > *:not(#play) {
+    display: none;
+}
+
+body.fullscreen-active #play > *:not(.game-iframe-container) {
+    display: none;
+}
+
+/* 全屏模式下按钮位置调整 */
+.game-iframe-container:fullscreen .fullscreen-controls,
+.game-iframe-container:-webkit-full-screen .fullscreen-controls,
+.game-iframe-container:-moz-full-screen .fullscreen-controls,
+.game-iframe-container:-ms-fullscreen .fullscreen-controls,
+.game-iframe-container.pseudo-fullscreen .fullscreen-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000000;
+}
+
+/* 防止全屏时出现滚动条 */
+.game-iframe-container:fullscreen,
+.game-iframe-container:-webkit-full-screen,
+.game-iframe-container:-moz-full-screen,
+.game-iframe-container:-ms-fullscreen,
+.game-iframe-container.pseudo-fullscreen {
+    overflow: hidden;
+}
+
 /* iOS Safari 特殊优化 */
 @supports (-webkit-touch-callout: none) {
     .game-iframe-container iframe {
         /* iOS上的额外优化 */
         -webkit-overflow-scrolling: touch;
         transform: translateZ(0); /* 启用硬件加速 */
+    }
+    
+    /* iOS 全屏模式优化 */
+    .game-iframe-container:fullscreen,
+    .game-iframe-container.pseudo-fullscreen {
+        /* iOS Safari 全屏时确保完全覆盖 */
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        padding: 0 !important;
     }
 } 
